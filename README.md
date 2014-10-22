@@ -20,17 +20,24 @@ You may work in teams of up to three persons. Code for your project should be su
 * All source files for each part of the project you submit.
 * A .doc, .docx, or .pdf file for each part of the project you submit, containing the written component of the project.
 * A readme file for each part of the project you submit, explaining how to execute that part of the project.
+
 While you may use built-in or external libraries of classes and objects for matrix and linear algebra (e.g. numpy), you may only use built-in/library functions and methods that do the following:
-* Create/instantiate/initialize vectors and matrices • Add and subtract vectors and matrices
+
+* Create/instantiate/initialize vectors and matrices
+* Add and subtract vectors and matrices
 * Multiply a scalar with a vector or matrix
 * Take the dot product of two vectors
 * Transpose a matrix or vector
+
 You must program any other linear algebra functionality you wish to use yourself, in-
-cluding (but not limited to) procedures which • Find the inverse of a matrix
+cluding (but not limited to) procedures which
+
+* Find the inverse of a matrix
 * Find the QR-factorization of a matrix
 * Find the determinant of a matrix
 * Find the trace of a matrix
-* Find the eigenvalues and eigenvectors of a matrix • Rotate, reflect, or project a vector
+* Find the eigenvalues and eigenvectors of a matrix
+* Rotate, reflect, or project a vector
 
 Using built-in or external library functions or using code copied from an external source (e.g. the Internet) for these operations will result in significant penalties on the relevant portion of the project. Moreover, submitting copied code without proper credit due will be considered plagiarism (see below).
 
