@@ -83,7 +83,9 @@ MATH 2605 Project Outline October 19, 2014
 (ii) What is the benefit of modifying the algorithm in this way? (Your answer should
 consider the benefit in terms of conditioning error.)
 You should do one of the next two parts of the project. If you do both, specify which one should be graded for extra credit.
-2 Convergence of the Power Method
+
+### 2 Convergence of the Power Method
+
 In this part you’ll investigate the convergence of the power method for calculating eigenvalues and eigenvectors of randomly generated 2 × 2 matrices.
 Your job is to
 (a) Implement a procedure named power_method that uses the power method to approx- imate an eigenvalue and associated eigenvector of an n × n matrix. The inputs to the procedure should be
@@ -96,8 +98,6 @@ The outputs should be the approximate eigenvalue and eigenvector obtained by the
 each matrix A,
 * Compute A−1. (In the unlikely event A−1 doesn’t exist, throw out A, generate a new random 2 × 2 matrix, and restart with this newly generated matrix.)
 * Use power_method to find the largest eigenvalue of A in absolute value within an accuracy of 5 decimal places (ε = 0.00005). Use a maximum of N = 100 iterations before quitting in failure.
-￼Page 4 of ??
-MATH 2605 Project Outline October 19, 2014
 * Use power_method on A−1 to find the smallest eigenvalue of A in absolute value within an accuracy of 5 decimal places. Use a maximum of N = 100 iterations before quitting in failure.
 * Record the trace and determinant of A, and also record the number of iterations needed for the runs of power_method on A and on A−1.
 (c) Using your results from (b), plot two color-coded scatterplots. The x-axis of the plot should be the determinant, the y-axis should be the trace. Plot the determinant and trace of each matrix from (b) as a point, and color the point based on the number of iterations needed in power_method for that matrix. The second scatterplot should do the same, except coloring the point based on the number of iterations needed in power_method for the inverse of each matrix.
