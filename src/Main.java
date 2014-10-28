@@ -1,4 +1,8 @@
+import Jama.Matrix;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -6,8 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
-        File file = getFile();
-        double[] guesses = getPoints();
+        List<Matrix> dataPoints = getDataPoints();
+        double[] guesses = getUserGuessPoints();
         int iterations = getIterationNum();
     }
 
@@ -24,20 +28,32 @@ public class Main {
         return iterations;
     }
 
-    private static File getFile() {
+    private static List<Matrix> getDataPoints() {
         String input;
         File file = null;
+        List<Matrix> dataPoints = new ArrayList<Matrix>();
         do {
             System.out.print("Text file with points > ");
             input = scanner.nextLine();
             try {
                 file = new File(input);
+                Scanner fileScanner = new Scanner(file);
+                while (fileScanner.hasNext()) {
+                    String line = fileScanner.nextLine();
+                    if (line.matches("\\s*\\-?\\d+(\\.\\d+)?\\s*,\\s*\\-?\\d+(\\.\\d+)?\\s*")) {
+                        String[] point = line.replace(" ", "").split(",");
+                        dataPoints.add(new Matrix(new double[][] {new double[] {Double.parseDouble(point[0]), Double.parseDouble(point[1])}}));
+                    } else {
+                        file = null;
+                        break;
+                    }
+                }
             } catch (Exception e) {}
         } while (file != null && (!file.exists() || file.isDirectory()));
-        return file;
+        return dataPoints;
     }
 
-    private static double[] getPoints() {
+    private static double[] getUserGuessPoints() {
         String input;
         double[] guesses = null;
         do {
