@@ -43,13 +43,13 @@ public class Main {
                     if (line.matches("\\s*\\-?\\d+(\\.\\d+)?\\s*,\\s*\\-?\\d+(\\.\\d+)?\\s*")) {
                         String[] point = line.replace(" ", "").split(",");
                         dataPoints.add(new Matrix(new double[][] {new double[] {Double.parseDouble(point[0]), Double.parseDouble(point[1])}}));
-                    } else {
+                    } else if (!line.matches("^\\s*$")) {
                         file = null;
                         break;
                     }
                 }
             } catch (Exception e) {}
-        } while (file != null && (!file.exists() || file.isDirectory()));
+        } while (file != null && (!file.exists() || file.isDirectory() || dataPoints.size() < 1));
         return dataPoints;
     }
 
