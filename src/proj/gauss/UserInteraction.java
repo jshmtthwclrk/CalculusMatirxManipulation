@@ -55,7 +55,7 @@ public class UserInteraction {
         do {
             System.out.print("Guesses of coefficients > ");
             input = scanner.nextLine();
-            if (input.matches("\\(\\s*\\-?\\d+(\\.\\d+)?\\s*,\\s*\\-?\\d+(\\.\\d+)?\\s*,\\s*\\-?\\d+(\\.\\d+)?\\s*\\)")) {
+            if (input.matches("\\s*\\(\\s*\\-?\\d+(\\.\\d*)?\\s*,\\s*\\-?\\d+(\\.\\d*)?\\s*,\\s*\\-?\\d+(\\.\\d*)?\\s*\\)\\s*")) {
                 String[] guessesString = input.replace("(", "").replace(")", "").replace(" ", "").split(",");
                 guesses = new Matrix(3, 1);
                 for (int i = 0; i < 3; i++) {
