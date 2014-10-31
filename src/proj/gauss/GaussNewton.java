@@ -9,6 +9,23 @@ public abstract class GaussNewton {
     private List<Matrix> dataPoints;
     private Matrix bigBVector;
 
+    public Matrix performEfficientGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
+        this.dataPoints = dataPoints;
+        bigBVector = new Matrix(3, 1);
+        bigBVector.set(0, 0, guesses.get(0, 0));
+        bigBVector.set(1, 0, guesses.get(1, 0));
+        bigBVector.set(2, 0, guesses.get(2, 0));
+        for (int i = 0; i < iterations; i++) {
+            Matrix rVector = getRVector();
+            Matrix jacobi = getJacobianMatrix();
+            Matrix[] qrMatrices = qr_fact_househ(jacobi);
+            Matrix qMatrix = qrMatrices[0];
+            Matrix rMatrix = qrMatrices[1];
+            bigBVector = bigBVector.minus(MatrixHelper.getInverse(rMatrix).times(qMatrix.transpose()).times(rVector));
+        }
+        return bigBVector;
+    }
+
     public Matrix performInefficientGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
         this.dataPoints = dataPoints;
         bigBVector = new Matrix(3, 1);
@@ -97,5 +114,10 @@ public abstract class GaussNewton {
             default:
                 return 0;
         }
+    }
+
+    //This function is just a placeholder
+    private Matrix[] qr_fact_househ(Matrix jacobi) {
+        return null;
     }
 }

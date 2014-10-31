@@ -3,3 +3,4 @@
 *.iml
 out/**
 test.txt
+src/META-INF/**
