@@ -117,7 +117,7 @@ public abstract class GaussNewton {
     }
 
     //This function is just a placeholder
-    private Matrix[] qr_fact_househ(Matrix jacobi) {
+    private Matrix[] qr_fact_househ(Matrix jacobi) { //private Matrix[] HouseHolderRotation.qr_fact_househ(Matrix jacobi)
         return null;
     }
 }
