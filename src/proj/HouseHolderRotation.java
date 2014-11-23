@@ -37,7 +37,7 @@ public class HouseHolderRotation {
             magnitude = Math.sqrt(preMag);
             // Creating Householder vectors
             if ((magnitude > 0.0) || (magnitude < 0.0)) {
-                if (matrixA[a][a] < 0) {
+                if (matrixA[a][a] < 0.0) {
                     magnitude = -magnitude;
                 }
                 for (int b = a; b < m; b++) {
