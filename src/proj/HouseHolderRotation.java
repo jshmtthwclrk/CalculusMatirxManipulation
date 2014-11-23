@@ -24,13 +24,13 @@ public class HouseHolderRotation {
         int m = A.getRowDimension();
         int n = A.getColumnDimension();
         double[] rD = new double[n];
-        Matrix[] qrDecomp = new Matrix[1];
+        Matrix[] qrDecomp = new Matrix[2];
         Matrix Q = new Matrix(m, n);
         Matrix R = new Matrix(n, n);
 
         for (int a = 0; a < n; a++) {
-            double preMag;
-            double magnitude;
+            double preMag = 0.0;
+            double magnitude = 0.0;
             for (int b = a; b < m; b++) { //rows
                     preMag = preMag + Math.pow(matrixA[b][a], 2.0);
                 }
@@ -45,13 +45,13 @@ public class HouseHolderRotation {
                 }
                 matrixA[a][a]++;
                 for (int c = a + 1; c < n; c++) {
-                    double x;
+                    double x = 0.0;
                     for (int d = a; d < m; d++) {
                         x = x + (matrixA[d][a] * matrixA[d][c]);
                     }
                     x = -(x / matrixA[a][a]);
                     for (int d = a; d < m; d++) {
-                        matrixA[c][a] = matrixA[c][a] + (matrixA[d][a] * x);
+                        matrixA[d][c] = matrixA[d][c] + (matrixA[d][a] * x);
                     }
                 }
             }
@@ -67,7 +67,7 @@ public class HouseHolderRotation {
             matrixQ[a][a] = 1.0;
             for (int b = a; b < n; b++) {
                 if ((matrixA[a][a] > 0) || (matrixA[a][a] < 0)) {
-                    double y;
+                    double y = 0.0;
                     for (int c = a; c < m; c++) {
                         y = y + (matrixA[c][a] * matrixQ[c][b]);
                     }
