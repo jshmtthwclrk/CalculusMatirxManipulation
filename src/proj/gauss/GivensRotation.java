@@ -11,8 +11,8 @@ import Jama.Matrix;
  * @version 1.0
  */
 public class GivensRotation {
-    private double cosine;
-    private double sine;
+    private static double cosine;
+    private static double sine;
 
     /**
      * Constructs a new Givens Rotation
@@ -50,13 +50,74 @@ public class GivensRotation {
     } /* end of GivensRotation(double, double) */
 
     /**
+     *
+     *
+     * @param a the matrix to preform the QR Factorization
+     * @return matrixArr the Array of Q and R
+     */
+    public static Matrix[] qr_fact_givens(Matrix a) {
+        Matrix[] matrixArr = null;
+        Matrix q = new Matrix(a.getColumnDimension(), a.getRowDimension());
+        Matrix r = new Matrix(a.getColumnDimension(), a.getRowDimension());
+
+        // Set q equal to the identity matrix
+        q.identity(a.getColumnDimension(), a.getRowDimension());
+
+        for (int j = 0; j < a.getColumnDimension(); j++) {
+            for (int i = j+1; i < a.getColumnDimension(); i++) {
+                // Create g matrix
+                Matrix g = new Matrix(a.getColumnDimension(), a.getRowDimension());
+                g.identity(a.getColumnDimension(), a.getRowDimension());
+                // set both cosine and sine
+                double c = a.get(j, j) / Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2));
+                double s = -a.get(i,i) / Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2));
+                // set Q entries equal to the appropriate sub matrix
+                g.set(i, i, c);
+                g.set(j, j, c);
+                g.set(i, j, s);
+                g.set(j, i, -s);
+
+                // set the new A
+                a = g.times(a);
+                q = q.times(g.transpose());
+                r = g.times(a);
+            }
+        } /* end of for loop */
+
+        // Set Array equal to new matricies
+        matrixArr[0] = q;
+        matrixArr[1] = r;
+
+        return matrixArr;
+    } /* end of qr_fact_givens(Matrix) */
+
+    public static int[] findLargeVal(Matrix a) {
+        // Find the largest value entry in Matrix a
+        double largeVal = 0;
+        int[] index = null;
+        int i, j;
+        for (j = 0; j < a.getColumnDimension(); j++) {
+            for (i = 0; i < a.getRowDimension(); i++) {
+                if (i != j && i > j) {
+                    if (a.get(i, j) > largeVal) {
+                        largeVal = a.get(i, j);
+                        index[0] = i;
+                        index[1] = j;
+                    } /* end of inner if statement */
+                } /* end of if statement */
+            } /* end of inner for loop */
+        } /* end of for loop */
+        return index;
+    }
+
+    /**
      * Apply this rotation from the left to the given matrix.
      * Sets A = Gt * A
      * @param a the matrix to apply rotation
      * @param i the first row to affect in the rotation
      * @param j the second row
      */
-    public void applyLeft(Matrix a, int i, int j) {
+    public static void applyLeft(Matrix a, int i, int j) {
         // Loops through all of the columns, only affecting rows i and j
         for (int k = 0; k < a.getColumnDimension(); k++) {
             double vi = a.get(i, k);
@@ -73,7 +134,7 @@ public class GivensRotation {
      * @param i the first column to affect the rotation
      * @param j the second column
      */
-    public void applyRight(Matrix a, int i, int j) {
+    public static void applyRight(Matrix a, int i, int j) {
         // Loops through all of the rows, only affecting columns i and j
         for (int k = 0; k < a.getRowDimension(); k++) {
             double vi = a.get(k, i);
