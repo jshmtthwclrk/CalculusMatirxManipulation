@@ -7,7 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A class to get input from the user
+ */
 public class UserInteraction {
+    /**
+     * Asks for the user to enter an integer. Continues to ask until valid input
+     * is received
+     * @param scanner to get the user input with
+     * @return the number of iterations entered by the user
+     */
     public static int getIterationNum(Scanner scanner) {
         String input;
         int iterations = -1;
@@ -21,6 +30,12 @@ public class UserInteraction {
         return iterations;
     }
 
+    /**
+     * Asks for the user to enter a file name containing tuples representing
+     * (x, y) coords. Continues to ask until a file with valid data is received
+     * @param scanner to get the user input with
+     * @return the list of data points represented by 2x1 matrices
+     */
     public static List<Matrix> getDataPoints(Scanner scanner) {
         String input;
         File file = null;
@@ -49,6 +64,12 @@ public class UserInteraction {
         return dataPoints;
     }
 
+    /**
+     * Asks for the user to enter three numbers formatted as a triple.
+     * Continues to ask until valid input is received
+     * @param scanner to get the user input with
+     * @return the three numbers in a 3x1 matrix
+     */
     public static Matrix getUserGuessPoints(Scanner scanner) {
         String input;
         Matrix guesses = null;

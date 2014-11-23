@@ -5,11 +5,26 @@ import proj.MatrixHelper;
 
 import java.util.List;
 
+/**
+ * An abstract class that performs Gauss Newton. Can perform both the precise
+ * method (using householder or givens)
+ * or the imprecise method (taking inverses)
+ */
 public abstract class GaussNewton {
     private List<Matrix> dataPoints;
     private Matrix bigBVector;
 
-    public Matrix performEfficientGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
+    /**
+     * Performs Gauss Newton with modification. Uses QR factorization done using
+     * Givens rotations.
+     * @param dataPoints the list of data points being estimated
+     * @param guesses the 3x1 matrix of guesses for initial A, B, and C values
+     * @param iterations the number of times to perform the method
+     * @return a 3x1 matrix containing the A, B, and C points for the
+     *         equation corresponding to the type of Gauss Newton being
+     *         performed
+     */
+    public Matrix performModifiedGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
         this.dataPoints = dataPoints;
         bigBVector = new Matrix(3, 1);
         bigBVector.set(0, 0, guesses.get(0, 0));
@@ -26,7 +41,17 @@ public abstract class GaussNewton {
         return bigBVector;
     }
 
-    public Matrix performInefficientGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
+    /**
+     * Performs Gauss Newton without modification. Takes the inverse of matrices
+     * which makes it imprecise.
+     * @param dataPoints the list of data points being estimated
+     * @param guesses the 3x1 matrix of guesses for initial A, B, and C values
+     * @param iterations the number of times to perform the method
+     * @return a 3x1 matrix containing the A, B, and C points for the
+     *         equation corresponding to the type of Gauss Newton being
+     *         performed
+     */
+    public Matrix performOriginalGaussNewton(List<Matrix> dataPoints, Matrix guesses, int iterations) {
         this.dataPoints = dataPoints;
         bigBVector = new Matrix(3, 1);
         bigBVector.set(0, 0, guesses.get(0, 0));
@@ -40,6 +65,10 @@ public abstract class GaussNewton {
         return bigBVector;
     }
 
+    /**
+     * Gets the vector composed of residuals
+     * @return an nx1 matrix where n is the number of data points
+     */
     private Matrix getRVector() {
         Matrix rVector = new Matrix(dataPoints.size(), 1);
         for (int i = 0; i < dataPoints.size(); i++) {
@@ -50,6 +79,10 @@ public abstract class GaussNewton {
         return rVector;
     }
 
+    /**
+     * Gets the Jacobian matrix
+     * @return an nx3 matrix where n is the number of data points
+     */
     private Matrix getJacobianMatrix() {
         Matrix jacobian = new Matrix(dataPoints.size(), 3);
         for (int i = 0; i < dataPoints.size(); i++) {
@@ -60,6 +93,12 @@ public abstract class GaussNewton {
         return jacobian;
     }
 
+    /**
+     * Performs the function associated with the type of line being estimated.
+     * Uses the current B vector and the ith data point
+     * @param i specifies which data point to use in calculating the result
+     * @return an nx3 matrix where n is the number of data points
+     */
     private double lineFunction(int i) {
         double a = bigBVector.get(0, 0);
         double b = bigBVector.get(1, 0);
@@ -76,6 +115,12 @@ public abstract class GaussNewton {
         }
     }
 
+    /**
+     * Performs the function associated with the type of line being estimated.
+     * Uses the current B vector and the ith data point
+     * @param i specifies which data point to use in calculating the result
+     * @return an nx3 matrix where n is the number of data points
+     */
     private double getJacobiCell(int i, int j) {
         double a = bigBVector.get(0, 0);
         double b = bigBVector.get(1, 0);
