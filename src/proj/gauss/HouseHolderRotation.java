@@ -1,4 +1,4 @@
-package proj;
+package proj.gauss;
 
 import Jama.Matrix;
 
@@ -10,7 +10,6 @@ import Jama.Matrix;
  * @version 1.0
  */
 public class HouseHolderRotation {
-
     /**
      * Method for HouseHolderRotation that computes the
      * QR decomposition of a given matrix
@@ -19,7 +18,6 @@ public class HouseHolderRotation {
      * @return qrDecomp array of matrices Q and R
      */
     public static Matrix[] qr_fact_househ(Matrix A) {
-
         double[][] matrixA = A.getArrayCopy();
         int m = A.getRowDimension();
         int n = A.getColumnDimension();
@@ -29,11 +27,11 @@ public class HouseHolderRotation {
         Matrix R = new Matrix(n, n);
 
         for (int a = 0; a < n; a++) {
-            double preMag;
+            double preMag = 0;
             double magnitude;
             for (int b = a; b < m; b++) { //rows
-                    preMag = preMag + Math.pow(matrixA[b][a], 2.0);
-                }
+                preMag = preMag + Math.pow(matrixA[b][a], 2.0);
+            }
             magnitude = Math.sqrt(preMag);
             // Creating Householder vectors
             if ((magnitude > 0.0) || (magnitude < 0.0)) {
@@ -45,7 +43,7 @@ public class HouseHolderRotation {
                 }
                 matrixA[a][a]++;
                 for (int c = a + 1; c < n; c++) {
-                    double x;
+                    double x = 0;
                     for (int d = a; d < m; d++) {
                         x = x + (matrixA[d][a] * matrixA[d][c]);
                     }
@@ -56,7 +54,6 @@ public class HouseHolderRotation {
                 }
             }
             rD[a] = -magnitude;
-
         }
         double[][] matrixQ = Q.getArray();
         // Compute the Q matrix of the QR decomposition
@@ -67,7 +64,7 @@ public class HouseHolderRotation {
             matrixQ[a][a] = 1.0;
             for (int b = a; b < n; b++) {
                 if ((matrixA[a][a] > 0) || (matrixA[a][a] < 0)) {
-                    double y;
+                    double y = 0;
                     for (int c = a; c < m; c++) {
                         y = y + (matrixA[c][a] * matrixQ[c][b]);
                     }
@@ -93,7 +90,6 @@ public class HouseHolderRotation {
             }
         }
         qrDecomp[1] = R;
-
         return qrDecomp;
     }
 }

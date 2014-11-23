@@ -2,6 +2,8 @@ package proj;
 
 import Jama.Matrix;
 
+import java.math.BigDecimal;
+
 /**
  * A helper class with basic matrix methods
  */
@@ -12,7 +14,7 @@ public class MatrixHelper {
      * @return the determinant
      */
     public static double getDeterminant(Matrix m) {
-        double determinant = 0;
+        BigDecimal determinant = BigDecimal.ZERO;
         if (m.getRowDimension() != m.getColumnDimension()) {
             throw new RuntimeException("Matrix must be square to take the determinant");
         } else if (m.getRowDimension() == 1) {
@@ -20,9 +22,9 @@ public class MatrixHelper {
         }
         for (int i = 0; i < m.getColumnDimension(); i++) {
             int sign = (i % 2 == 0) ? 1 : -1;
-            determinant += m.get(0, i) * getDeterminant(getCrossedOutMatrix(m, 0, i)) * sign;
+            determinant = determinant.add(BigDecimal.valueOf(m.get(0, i)).multiply(BigDecimal.valueOf(getDeterminant(getCrossedOutMatrix(m, 0, i)))).multiply(BigDecimal.valueOf(sign)));
         }
-        return determinant;
+        return determinant.doubleValue();
     }
 
     /**
@@ -91,11 +93,11 @@ public class MatrixHelper {
         if (a.getColumnDimension() != 1 || b.getColumnDimension() != 1 || a.getRowDimension() != b.getRowDimension()) {
             throw new RuntimeException("Must be vectors of the same dimension to find the dot product.");
         }
-        double res = 0;
+        BigDecimal res = BigDecimal.ZERO;
         for (int i = 0; i < a.getRowDimension(); i++) {
-            res += a.get(i, 0) * b.get(i, 0);
+            res = res.add(BigDecimal.valueOf(a.get(i, 0)).multiply(BigDecimal.valueOf(b.get(i, 0))));
         }
-        return res;
+        return res.doubleValue();
     }
 
     /**
