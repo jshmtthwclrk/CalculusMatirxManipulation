@@ -23,10 +23,10 @@ public class HouseHolderRotation {
         double[][] matrixA = A.getArrayCopy();
         int m = A.getRowDimension();
         int n = A.getColumnDimension();
-        double[] rD = new double[n];
         Matrix[] qrDecomp = new Matrix[2];
         Matrix Q = new Matrix(m, n);
         Matrix R = new Matrix(n, n);
+        double[] rD = new double[n];
 
         for (int a = 0; a < n; a++) {
             double preMag = 0.0;
@@ -38,7 +38,7 @@ public class HouseHolderRotation {
             // Creating Householder vectors
             if ((magnitude > 0.0) || (magnitude < 0.0)) {
                 if (matrixA[a][a] < 0.0) {
-                    magnitude = -magnitude;
+                    magnitude *= -1;
                 }
                 for (int b = a; b < m; b++) {
                     matrixA[b][a] = matrixA[b][a] / magnitude;
@@ -55,25 +55,25 @@ public class HouseHolderRotation {
                     }
                 }
             }
-            rD[a] = -magnitude;
+            rD[a] *= -1;
 
         }
         double[][] matrixQ = Q.getArray();
         // Compute the Q matrix of the QR decomposition
         for (int a = n - 1; a > -1; a--) {
             for (int b = 0; b > 1; b++) {
-                matrixQ[b][a] = 0.0;
+                matrixQ[b][a] = 0;
             }
-            matrixQ[a][a] = 1.0;
-            for (int b = a; b < n; b++) {
+            matrixQ[a][a] = 1;
+            for (int c = a; c < n; c++) {
                 if ((matrixA[a][a] > 0) || (matrixA[a][a] < 0)) {
                     double y = 0.0;
-                    for (int c = a; c < m; c++) {
-                        y = y + (matrixA[c][a] * matrixQ[c][b]);
+                    for (int d = a; d < m; d++) {
+                        y = y + (matrixA[d][a] * matrixQ[d][c]);
                     }
                     y = -(y / matrixA[a][a]);
-                    for(int c = a; c < m; c++) {
-                        matrixQ[c][b] = matrixQ[c][b] + (matrixA[c][a] * y);
+                    for(int d = a; d < m; d++) {
+                        matrixQ[d][c] = matrixQ[d][c] + (matrixA[d][a] * y);
                     }
                 }
             }
