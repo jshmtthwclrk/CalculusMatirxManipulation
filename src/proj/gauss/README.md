@@ -4,9 +4,9 @@ There are two methods. The performOriginalGaussNewton method uses an inverse to
 complete the operation, whereas the performModifiedGaussNewton method uses Givens
 rotations to factor the matrix into QR and complete the operation.
 
-To run the individual functions, gn_qua, gn_log, gn_rat, and gn_exp, you simply
+**To run the individual functions, gn_qua, gn_log, gn_rat, and gn_exp, you simply
 run the main method in the corresponding class. The class's main method will call
-the corresponding function. **I.e. ExponentialGaussNewton.main() will call gn_exp**.
+the corresponding function.**
 
 * ExponentialGaussNewton = gn_exp
 * QuadraticGaussNewton = gn_qua
