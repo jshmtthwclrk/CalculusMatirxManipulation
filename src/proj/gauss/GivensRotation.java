@@ -12,7 +12,6 @@ import proj.MatrixHelper;
  * @version 1.0
  */
 public class GivensRotation {
-
     /**
      * This method takes in a Matrix A, and uses the Givens Rotation
      * to find the QR Factorization.

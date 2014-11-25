@@ -28,6 +28,12 @@ public class MatrixHelper {
         return determinant.doubleValue();
     }
 
+    /**
+     * Multiplies two matrices together
+     * @param a first matrix
+     * @param b second matrix
+     * @return the two matrices multiplied together
+     */
     public static Matrix multiply(Matrix a, Matrix b) {
         if (a.getColumnDimension() != b.getRowDimension()) {
             throw new RuntimeException("These matrices can't be multiplied. Incorrect dimensions.");
@@ -45,6 +51,12 @@ public class MatrixHelper {
         return output;
     }
 
+    /**
+     * Solves the system of equations using the upper triangular matrix
+     * @param upperTriangular matrix
+     * @param b
+     * @return the answer to the problem
+     */
     public static Matrix solveWithUpperTriangular(Matrix upperTriangular, Matrix b) {
         Matrix output = new Matrix(b.getRowDimension(), 1);
         for (int i = b.getRowDimension() - 1; i >= 0; i--) {
@@ -57,6 +69,11 @@ public class MatrixHelper {
         return output;
     }
 
+    /**
+     * Finds the trace of the matrix
+     * @param m matrix to find the trace of
+     * @return trace of the matrix
+     */
     public static double getTrace(Matrix m) {
         if (m.getColumnDimension() != m.getRowDimension()) {
             throw new RuntimeException("Can't calculate trace of non-square matrix.");

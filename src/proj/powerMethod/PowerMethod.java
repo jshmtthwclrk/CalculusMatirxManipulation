@@ -18,7 +18,7 @@ public class PowerMethod {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        FileWriter matrixWriter = new FileWriter("matrix.csv");
+        FileWriter matrixWriter = new FileWriter("power.csv");
         FileWriter inverseWriter = new FileWriter("inverse.csv");
         matrixWriter.append("Determinant,Trace,Iterations\n");
         inverseWriter.append("Determinant,Trace,Iterations\n");
