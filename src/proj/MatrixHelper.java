@@ -3,6 +3,7 @@ package proj;
 import Jama.Matrix;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * A helper class with basic matrix methods
@@ -48,10 +49,10 @@ public class MatrixHelper {
         Matrix output = new Matrix(b.getRowDimension(), 1);
         for (int i = b.getRowDimension() - 1; i >= 0; i--) {
             BigDecimal number = BigDecimal.ZERO;
-            for (int j = i - 1 - b.getRowDimension(); j >= 0; j++) {
-                number = number.add(BigDecimal.valueOf(output.get(j, 0)).multiply(BigDecimal.valueOf(upperTriangular.get(i, i + j))));
+            for (int j = b.getRowDimension() - 1; j > i; j--) {
+                number = number.add(BigDecimal.valueOf(output.get(j, 0)).multiply(BigDecimal.valueOf(upperTriangular.get(i, j))));
             }
-            output.set(i, 0, BigDecimal.valueOf(b.get(i, 0)).subtract(number).doubleValue());
+            output.set(i, 0, BigDecimal.valueOf(b.get(i, 0)).subtract(number).divide(BigDecimal.valueOf(upperTriangular.get(i, i)), MathContext.DECIMAL32).doubleValue());
         }
         return output;
     }
