@@ -22,7 +22,7 @@ public class RationalGaussNewton extends GaussNewton {
         Matrix guesses = UserInteraction.getUserGuessPoints(scanner);
         int iterations = UserInteraction.getIterationNum(scanner);
         RationalGaussNewton rationalGaussNewton = new RationalGaussNewton();
-        Matrix result = rationalGaussNewton.performOriginalGaussNewton(dataPoints, guesses, iterations);
+        Matrix result = rationalGaussNewton.performModifiedGaussNewton(dataPoints, guesses, iterations);
         System.out.println("The coefficients for the best approximation of a rational function are (" + result.get(0, 0) + ", " + result.get(1, 0) + ", " + result.get(2, 0) + ")");
     }
 }

@@ -22,7 +22,7 @@ public class ExponentialGaussNewton extends GaussNewton {
         Matrix guesses = UserInteraction.getUserGuessPoints(scanner);
         int iterations = UserInteraction.getIterationNum(scanner);
         ExponentialGaussNewton exponentialGaussNewton = new ExponentialGaussNewton();
-        Matrix result = exponentialGaussNewton.performOriginalGaussNewton(dataPoints, guesses, iterations);
+        Matrix result = exponentialGaussNewton.performModifiedGaussNewton(dataPoints, guesses, iterations);
         System.out.println("The coefficients for the best approximation of an exponential function are (" + result.get(0, 0) + ", " + result.get(1, 0) + ", " + result.get(2, 0) + ")");
     }
 }
