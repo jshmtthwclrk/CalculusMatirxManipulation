@@ -6,3 +6,4 @@ test.txt
 src/META-INF/**
 inverse.csv
 matrix.csv
+output/**
