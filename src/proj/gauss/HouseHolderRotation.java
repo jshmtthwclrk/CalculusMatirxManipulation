@@ -78,6 +78,12 @@ public class HouseHolderRotation {
                 }
             }
         }
+/*        double[][] negI = new double[m][n];*/
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                matrixQ[x][y] *= -1;
+            }
+        }
         qrDecomp[0] = Q;
         // Compute the R matrix of the QR decomposition
         double[][] matrixR = R.getArray();
@@ -90,6 +96,11 @@ public class HouseHolderRotation {
                 } else {
                     matrixR[a][b] = rD[a];
                 }
+            }
+        }
+        for (int x = 0; x < n; x++) {
+            for (int y = 0; y < n; y++) {
+                matrixR[x][y] = matrixR[x][y] * -1;
             }
         }
         qrDecomp[1] = R;
