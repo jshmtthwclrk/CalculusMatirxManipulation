@@ -76,7 +76,7 @@ public class PowerMethod {
         int iterations = 0;
         while (iterations < maxIterations && (error == null || Math.abs(error.doubleValue()) > tolerance)) {
             iterations++;
-            x = matrix.times(prevX);
+            x = MatrixHelper.multiply(matrix, prevX);
             BigDecimal secondDotProd = new BigDecimal(MatrixHelper.dotProduct(guess, prevX));
             if (secondDotProd.equals(BigDecimal.ZERO)) {
                 return null;

@@ -1,6 +1,7 @@
 package proj.gauss;
 
 import Jama.Matrix;
+import proj.MatrixHelper;
 
 /**
  * Created by jshmtthwclrk on 10/29/14.
@@ -56,18 +57,15 @@ public class GivensRotation {
      * @return matrixArr the Array of Q and R
      */
     public static Matrix[] qr_fact_givens(Matrix a) {
-        Matrix[] matrixArr = null;
-        Matrix q = new Matrix(a.getColumnDimension(), a.getRowDimension());
-        Matrix r = new Matrix(a.getColumnDimension(), a.getRowDimension());
-
+        Matrix[] matrixArr = new Matrix[2];
         // Set q equal to the identity matrix
-        q.identity(a.getColumnDimension(), a.getRowDimension());
+        Matrix q = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
+        Matrix r = new Matrix(a.getColumnDimension(), a.getRowDimension());
 
         for (int j = 0; j < a.getColumnDimension(); j++) {
             for (int i = j+1; i < a.getColumnDimension(); i++) {
                 // Create g matrix
-                Matrix g = new Matrix(a.getColumnDimension(), a.getRowDimension());
-                g.identity(a.getColumnDimension(), a.getRowDimension());
+                Matrix g = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
                 // set both cosine and sine
                 double c = a.get(j, j) / Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2));
                 double s = -a.get(i,i) / Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2));
@@ -78,13 +76,13 @@ public class GivensRotation {
                 g.set(j, i, -s);
 
                 // set the new A
-                a = g.times(a);
-                q = q.times(g.transpose());
-                r = g.times(a);
+                a = MatrixHelper.multiply(g, a);
+                q = MatrixHelper.multiply(q, g.transpose());
+                r = MatrixHelper.multiply(g, a);
             }
         } /* end of for loop */
 
-        // Set Array equal to new matricies
+        // Set Array equal to new matrices
         matrixArr[0] = q;
         matrixArr[1] = r;
 

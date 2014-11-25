@@ -10,7 +10,6 @@ import Jama.Matrix;
  * @version 1.0
  */
 public class HouseHolderRotation {
-
     /**
      * Method for HouseHolderRotation that computes the
      * QR decomposition of a given matrix
@@ -19,7 +18,6 @@ public class HouseHolderRotation {
      * @return qrDecomp array of matrices Q and R
      */
     public static Matrix[] qr_fact_househ(Matrix A) {
-
         double[][] matrixA = A.getArrayCopy();
         int m = A.getRowDimension();
         int n = A.getColumnDimension();
@@ -104,7 +102,6 @@ public class HouseHolderRotation {
             }
         }
         qrDecomp[1] = R;
-
         return qrDecomp;
     }
 }
