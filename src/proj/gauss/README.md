@@ -10,7 +10,7 @@ the corresponding function.**
 
 * ExponentialGaussNewton = gn_exp
 * QuadraticGaussNewton = gn_qua
-* LogarithmicGaussNewton = gn_log
+* LogarithmicGaussNewton = gn_log (using natural log)
 * RationalGaussNewton = gn_rat
 
 Once the main method is run, the UserInteraction class will ask for user input
