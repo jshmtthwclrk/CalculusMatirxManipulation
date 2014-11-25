@@ -29,15 +29,15 @@ public class HouseHolderRotation {
         double[] rD = new double[n];
 
         for (int a = 0; a < n; a++) {
-            double preMag = 0.0;
-            double magnitude = 0.0;
+            double preMag = 0;
+            double magnitude = 0;
             for (int b = a; b < m; b++) { //rows
                     preMag = preMag + Math.pow(matrixA[b][a], 2.0);
                 }
             magnitude = Math.sqrt(preMag);
             // Creating Householder vectors
-            if ((magnitude > 0.0) || (magnitude < 0.0)) {
-                if (matrixA[a][a] < 0.0) {
+            if ((magnitude > 0) || (magnitude < 0)) {
+                if (matrixA[a][a] < 0) {
                     magnitude *= -1;
                 }
                 for (int b = a; b < m; b++) {
@@ -45,7 +45,7 @@ public class HouseHolderRotation {
                 }
                 matrixA[a][a]++;
                 for (int c = a + 1; c < n; c++) {
-                    double x = 0.0;
+                    double x = 0;
                     for (int d = a; d < m; d++) {
                         x = x + (matrixA[d][a] * matrixA[d][c]);
                     }
@@ -55,7 +55,7 @@ public class HouseHolderRotation {
                     }
                 }
             }
-            rD[a] *= -1;
+            rD[a] = -magnitude;
 
         }
         double[][] matrixQ = Q.getArray();
@@ -67,7 +67,7 @@ public class HouseHolderRotation {
             matrixQ[a][a] = 1;
             for (int c = a; c < n; c++) {
                 if ((matrixA[a][a] > 0) || (matrixA[a][a] < 0)) {
-                    double y = 0.0;
+                    double y = 0;
                     for (int d = a; d < m; d++) {
                         y = y + (matrixA[d][a] * matrixQ[d][c]);
                     }
@@ -84,7 +84,7 @@ public class HouseHolderRotation {
         for (int a = 0; a < n; a++) {
             for (int b = 0; b < n; b++) {
                 if (a > b) {
-                    matrixR[a][b] = 0.0;
+                    matrixR[a][b] = 0;
                 } else if (a < b) {
                     matrixR[a][b] = matrixA[a][b];
                 } else {
