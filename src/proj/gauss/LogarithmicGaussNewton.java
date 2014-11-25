@@ -22,7 +22,7 @@ public class LogarithmicGaussNewton extends GaussNewton {
         Matrix guesses = UserInteraction.getUserGuessPoints(scanner);
         int iterations = UserInteraction.getIterationNum(scanner);
         LogarithmicGaussNewton logarithmicGaussNewton = new LogarithmicGaussNewton();
-        Matrix result = logarithmicGaussNewton.performOriginalGaussNewton(dataPoints, guesses, iterations);
+        Matrix result = logarithmicGaussNewton.performModifiedGaussNewton(dataPoints, guesses, iterations);
         System.out.println("The coefficients for the best approximation of a logarithmic function are (" + result.get(0, 0) + ", " + result.get(1, 0) + ", " + result.get(2, 0) + ")");
     }
 }

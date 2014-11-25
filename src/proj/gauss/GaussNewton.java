@@ -1,6 +1,7 @@
 package proj.gauss;
 
 import Jama.Matrix;
+import proj.HouseHolderRotation;
 import proj.MatrixHelper;
 
 import java.util.List;
@@ -33,13 +34,16 @@ public abstract class GaussNewton {
         for (int i = 0; i < iterations; i++) {
             Matrix rVector = getRVector();
             Matrix jacobi = getJacobianMatrix();
-            Matrix[] qrMatrices = qr_fact_househ(jacobi);
+            Matrix[] qrMatrices = HouseHolderRotation.qr_fact_househ(jacobi);
             Matrix qMatrix = qrMatrices[0];
             Matrix rMatrix = qrMatrices[1];
             bigBVector = bigBVector.minus(
+                    MatrixHelper.solveWithUpperTriangular(
+                            rMatrix, MatrixHelper.multiply(qMatrix.transpose(), rVector)));
+/*            bigBVector = bigBVector.minus(
                     MatrixHelper.multiply(
                         MatrixHelper.multiply(MatrixHelper.getInverse(rMatrix), qMatrix.transpose()),
-                    rVector));
+                    rVector));*/
         }
         return bigBVector;
     }
@@ -65,10 +69,10 @@ public abstract class GaussNewton {
             Matrix jacobi = getJacobianMatrix();
             bigBVector = bigBVector.minus(
                     MatrixHelper.multiply(
-                        MatrixHelper.multiply(
-                            MatrixHelper.getInverse(MatrixHelper.multiply(jacobi.transpose(), jacobi)),
-                        jacobi.transpose()),
-                    rVector));
+                            MatrixHelper.multiply(
+                                    MatrixHelper.getInverse(MatrixHelper.multiply(jacobi.transpose(), jacobi)),
+                                    jacobi.transpose()),
+                            rVector));
         }
         return bigBVector;
     }
