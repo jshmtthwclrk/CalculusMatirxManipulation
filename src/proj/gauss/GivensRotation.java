@@ -25,33 +25,35 @@ public class GivensRotation {
         // Create array to return
         Matrix[] matrixArr = new Matrix[2];
 
+        // Create original A
+        Matrix origA = a.copy();
         // Set Q equal to the identity matrix
         Matrix q = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
-        // Create R matrix
-        Matrix r = new Matrix(a.getColumnDimension(), a.getRowDimension());
 
         for (int j = 0; j < a.getColumnDimension(); j++) {
             for (int i = j+1; i < a.getRowDimension(); i++) {
                 // Create g matrix
                 Matrix g = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
-                // set both cosine and sine
+                // Set both cosine and sine
                 double c = a.get(j, j) / ( Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2) ) );
                 double s = - a.get(i, j) / ( Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2) ) );
 
-                // set Q entries equal to the appropriate sub matrix
+                // Set Q entries equal to the appropriate sub matrix
                 g.set(i, i, c);
                 g.set(i, j, s);
                 g.set(j, i, -s);
                 g.set(j, j, c);
 
-                // set the new A
+                // Set the new A
                 a = MatrixHelper.multiply(g, a);
-                // set the new Q
+                // Set the new Q
                 q = MatrixHelper.multiply(q, g.transpose());
-                // the R matrix should equal A
-                r = a;
             } /* end of inner for loop */
         } /* end of for loop */
+
+        // Create R matrix
+        // The R matrix should equal A
+        Matrix r = MatrixHelper.multiply(q.transpose(), origA);
 
         // Set Array indices equal to new matrices
         matrixArr[0] = q;
