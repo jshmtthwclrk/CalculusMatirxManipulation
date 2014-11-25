@@ -27,6 +27,46 @@ public class MatrixHelper {
         return determinant.doubleValue();
     }
 
+    public static Matrix multiply(Matrix a, Matrix b) {
+        if (a.getColumnDimension() != b.getRowDimension()) {
+            throw new RuntimeException("These matrices can't be multiplied. Incorrect dimensions.");
+        }
+        Matrix output = new Matrix(a.getRowDimension(), b.getColumnDimension());
+        for (int k = 0; k < a.getRowDimension(); k++) {
+            for (int i = 0; i < b.getColumnDimension(); i++) {
+                BigDecimal sum = BigDecimal.ZERO;
+                for (int j = 0; j < a.getColumnDimension(); j++) {
+                    sum = sum.add(BigDecimal.valueOf(a.get(k, j)).multiply(BigDecimal.valueOf(b.get(j, i))));
+                }
+                output.set(k, i, sum.doubleValue());
+            }
+        }
+        return output;
+    }
+
+    public static Matrix solveWithUpperTriangular(Matrix upperTriangular, Matrix b) {
+        Matrix output = new Matrix(b.getRowDimension(), 1);
+        for (int i = b.getRowDimension() - 1; i >= 0; i--) {
+            BigDecimal number = BigDecimal.ZERO;
+            for (int j = i - 1 - b.getRowDimension(); j >= 0; j++) {
+                number = number.add(BigDecimal.valueOf(output.get(j, 0)).multiply(BigDecimal.valueOf(upperTriangular.get(i, i + j))));
+            }
+            output.set(i, 0, BigDecimal.valueOf(b.get(i, 0)).subtract(number).doubleValue());
+        }
+        return output;
+    }
+
+    public static double getTrace(Matrix m) {
+        if (m.getColumnDimension() != m.getRowDimension()) {
+            throw new RuntimeException("Can't calculate trace of non-square matrix.");
+        }
+        BigDecimal sum = BigDecimal.ZERO;
+        for (int i = 0; i < m.getColumnDimension(); i++) {
+            sum = sum.add(BigDecimal.valueOf(m.get(i, i)));
+        }
+        return sum.doubleValue();
+    }
+
     /**
      * Calculates the inverse of the matrix by using the cofactor matrix and
      * the determinant

@@ -6,14 +6,17 @@ import proj.MatrixHelper;
 import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class contains the power method functions
  */
 public class PowerMethod {
+    /**
+     * Generates two CSV files, one for the power method done on 10,000 matrices,
+     * and one for the power method done on those matrices' inverses.
+     * @param args command line arguments
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         FileWriter matrixWriter = new FileWriter("matrix.csv");
         FileWriter inverseWriter = new FileWriter("inverse.csv");
@@ -34,13 +37,13 @@ public class PowerMethod {
         for (Matrix m : matrices) {
             PowerMethodOutput output = power_method(m, guess, .00005, 100);
             if (output != null) {
-                matrixWriter.append(MatrixHelper.getDeterminant(m) + "," + output.eigenvalue + "," + output.iterations + "\n");
+                matrixWriter.append(MatrixHelper.getDeterminant(m) + "," + MatrixHelper.getTrace(m) + "," + output.iterations + "\n");
             }
             Matrix inverse = MatrixHelper.getInverse(m);
             if (inverse != null) {
                 output = power_method(inverse, guess, .00005, 100);
                 if (output != null) {
-                    inverseWriter.append(MatrixHelper.getDeterminant(inverse) + "," + Math.abs(output.eigenvalue) + "," + output.iterations + "\n");
+                    inverseWriter.append(MatrixHelper.getDeterminant(inverse) + "," + MatrixHelper.getTrace(inverse) + "," + output.iterations + "\n");
                 }
             }
         }
@@ -96,6 +99,9 @@ public class PowerMethod {
         }
     }
 
+    /**
+     * Class that represents the result of the power method on a single matrix
+     */
     public static class PowerMethodOutput {
         public double eigenvalue;
         public Matrix eigenvector;
