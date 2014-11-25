@@ -39,11 +39,9 @@ public abstract class GaussNewton {
             Matrix rMatrix = qrMatrices[1];
             bigBVector = bigBVector.minus(
                     MatrixHelper.solveWithUpperTriangular(
-                            rMatrix, MatrixHelper.multiply(qMatrix.transpose(), rVector)));
-/*            bigBVector = bigBVector.minus(
-                    MatrixHelper.multiply(
-                        MatrixHelper.multiply(MatrixHelper.getInverse(rMatrix), qMatrix.transpose()),
-                    rVector));*/
+                            rMatrix,
+                            MatrixHelper.multiply(qMatrix.transpose(),
+                                    rVector)));
         }
         return bigBVector;
     }
