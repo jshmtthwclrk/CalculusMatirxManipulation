@@ -76,7 +76,6 @@ public class HouseHolderRotation {
                 }
             }
         }
-/*        double[][] negI = new double[m][n];*/
         for (int x = 0; x < m; x++) {
             for (int y = 0; y < n; y++) {
                 matrixQ[x][y] *= -1;
