@@ -21,19 +21,23 @@ public class GivensRotation {
      * @return matrixArr the Array of Q and R
      */
     public static Matrix[] qr_fact_givens(Matrix a) {
+
+        // Create array to return
         Matrix[] matrixArr = new Matrix[2];
-        // Set q equal to the identity matrix
+
+        // Set Q equal to the identity matrix
         Matrix q = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
+        // Create R matrix
         Matrix r = new Matrix(a.getColumnDimension(), a.getRowDimension());
-        Matrix ident = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
 
         for (int j = 0; j < a.getColumnDimension(); j++) {
-            for (int i = j+1; i < a.getColumnDimension(); i++) {
+            for (int i = j+1; i < a.getRowDimension(); i++) {
                 // Create g matrix
                 Matrix g = Matrix.identity(a.getColumnDimension(), a.getRowDimension());
                 // set both cosine and sine
                 double c = a.get(j, j) / ( Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2) ) );
                 double s = - a.get(i, j) / ( Math.sqrt(Math.pow(a.get(j, j), 2) + Math.pow(a.get(i, j), 2) ) );
+
                 // set Q entries equal to the appropriate sub matrix
                 g.set(i, i, c);
                 g.set(i, j, s);
@@ -41,14 +45,15 @@ public class GivensRotation {
                 g.set(j, j, c);
 
                 // set the new A
-                g = MatrixHelper.multiply(ident, g);
                 a = MatrixHelper.multiply(g, a);
+                // set the new Q
                 q = MatrixHelper.multiply(q, g.transpose());
+                // the R matrix should equal A
                 r = a;
             } /* end of inner for loop */
         } /* end of for loop */
 
-        // Set Array equal to new matrices
+        // Set Array indices equal to new matrices
         matrixArr[0] = q;
         matrixArr[1] = r;
 
