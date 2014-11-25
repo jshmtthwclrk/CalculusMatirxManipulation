@@ -1,4 +1,4 @@
-package proj.gauss;
+package proj;
 
 import Jama.Matrix;
 
@@ -10,6 +10,7 @@ import Jama.Matrix;
  * @version 1.0
  */
 public class HouseHolderRotation {
+
     /**
      * Method for HouseHolderRotation that computes the
      * QR decomposition of a given matrix
@@ -18,59 +19,61 @@ public class HouseHolderRotation {
      * @return qrDecomp array of matrices Q and R
      */
     public static Matrix[] qr_fact_househ(Matrix A) {
+
         double[][] matrixA = A.getArrayCopy();
         int m = A.getRowDimension();
         int n = A.getColumnDimension();
-        double[] rD = new double[n];
-        Matrix[] qrDecomp = new Matrix[1];
+        Matrix[] qrDecomp = new Matrix[2];
         Matrix Q = new Matrix(m, n);
         Matrix R = new Matrix(n, n);
+        double[] rD = new double[n];
 
         for (int a = 0; a < n; a++) {
-            double preMag = 0;
-            double magnitude;
+            double preMag = 0.0;
+            double magnitude = 0.0;
             for (int b = a; b < m; b++) { //rows
-                preMag = preMag + Math.pow(matrixA[b][a], 2.0);
-            }
+                    preMag = preMag + Math.pow(matrixA[b][a], 2.0);
+                }
             magnitude = Math.sqrt(preMag);
             // Creating Householder vectors
             if ((magnitude > 0.0) || (magnitude < 0.0)) {
                 if (matrixA[a][a] < 0.0) {
-                    magnitude = -magnitude;
+                    magnitude *= -1;
                 }
                 for (int b = a; b < m; b++) {
                     matrixA[b][a] = matrixA[b][a] / magnitude;
                 }
                 matrixA[a][a]++;
                 for (int c = a + 1; c < n; c++) {
-                    double x = 0;
+                    double x = 0.0;
                     for (int d = a; d < m; d++) {
                         x = x + (matrixA[d][a] * matrixA[d][c]);
                     }
                     x = -(x / matrixA[a][a]);
                     for (int d = a; d < m; d++) {
-                        matrixA[c][a] = matrixA[c][a] + (matrixA[d][a] * x);
+                        matrixA[d][c] = matrixA[d][c] + (matrixA[d][a] * x);
                     }
                 }
             }
-            rD[a] = -magnitude;
+            rD[a] *= -1;
+
         }
         double[][] matrixQ = Q.getArray();
         // Compute the Q matrix of the QR decomposition
         for (int a = n - 1; a > -1; a--) {
             for (int b = 0; b > 1; b++) {
-                matrixQ[b][a] = 0.0;
+                matrixQ[b][a] = 0;
             }
-            matrixQ[a][a] = 1.0;
-            for (int b = a; b < n; b++) {
+            matrixQ[a][a] = 1;
+            for (int c = a; c < n; c++) {
                 if ((matrixA[a][a] > 0) || (matrixA[a][a] < 0)) {
-                    double y = 0;
-                    for (int c = a; c < m; c++) {
-                        y = y + (matrixA[c][a] * matrixQ[c][b]);
+                    double y = 0.0;
+                    for (int d = a; d < m; d++) {
+                        y = y + (matrixA[d][a] * matrixQ[d][c]);
                     }
                     y = -(y / matrixA[a][a]);
-                    for(int c = a; c < m; c++) {
-                        matrixQ[c][b] = matrixQ[c][b] + (matrixA[c][a] * y);
+                    for(int d = a; d < m; d++) {
+                        matrixQ[d][c] = matrixQ[d][c] + (matrixA[d][a] * y);
                     }
                 }
             }
@@ -90,6 +93,7 @@ public class HouseHolderRotation {
             }
         }
         qrDecomp[1] = R;
+
         return qrDecomp;
     }
 }
