@@ -36,7 +36,10 @@ public abstract class GaussNewton {
             Matrix[] qrMatrices = qr_fact_househ(jacobi);
             Matrix qMatrix = qrMatrices[0];
             Matrix rMatrix = qrMatrices[1];
-            bigBVector = bigBVector.minus(MatrixHelper.getInverse(rMatrix).times(qMatrix.transpose()).times(rVector));
+            bigBVector = bigBVector.minus(
+                    MatrixHelper.multiply(
+                        MatrixHelper.multiply(MatrixHelper.getInverse(rMatrix), qMatrix.transpose()),
+                    rVector));
         }
         return bigBVector;
     }
@@ -60,7 +63,12 @@ public abstract class GaussNewton {
         for (int i = 0; i < iterations; i++) {
             Matrix rVector = getRVector();
             Matrix jacobi = getJacobianMatrix();
-            bigBVector = bigBVector.minus(MatrixHelper.getInverse(jacobi.transpose().times(jacobi)).times(jacobi.transpose()).times(rVector));
+            bigBVector = bigBVector.minus(
+                    MatrixHelper.multiply(
+                        MatrixHelper.multiply(
+                            MatrixHelper.getInverse(MatrixHelper.multiply(jacobi.transpose(), jacobi)),
+                        jacobi.transpose()),
+                    rVector));
         }
         return bigBVector;
     }
